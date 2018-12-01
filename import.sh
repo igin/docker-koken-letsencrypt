@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -o xtrace
+
 HTML_TAR=$1
 DATABASE_DUMP=$2
 

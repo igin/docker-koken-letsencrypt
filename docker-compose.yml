@@ -13,6 +13,10 @@ services:
             VIRTUAL_HOST: ${DOMAIN}
             LETSENCRYPT_HOST: ${DOMAIN}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+            KOKEN_DB_HOST: "db"
+            KOKEN_DB_DATABASE: ${MYSQL_DATABASE}
+            KOKEN_DB_USER: ${MYSQL_USER}
+            KOKEN_DB_PASSWORD: ${MYSQL_PASSWORD}
     db:
         container_name: ${CONTAINER_NAME}-db
         image: mariadb

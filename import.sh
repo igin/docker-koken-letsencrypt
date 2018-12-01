@@ -12,13 +12,13 @@ else
     exit 1
 fi
 
-tar -C /tmp/koken_restore -zxvf yourfile.tar.gz
+tar -C /tmp/koken_restore -zxvf ${HTML_TAR}
 
 STORAGE_DIR=/tmp/koken_restore/storage
 
 DB_SERVER=${CONTAINER_NAME}-db
 
-docker exec ${DB_SERVER} /usr/bin/mysqldump -u root --password="${MYSQL_ROOT_PASSWORD}" < ${DATABASE_DUMP}
+docker exec ${DB_SERVER} /usr/bin/mysql ${MYSQL_DATABASE} -u root --password="${MYSQL_ROOT_PASSWORD}" < ${DATABASE_DUMP}
 
 rm -rf ${KOKEN_DATA_DIR}/storage/*
 cp -r STORAGE_DIR/* ${KOKEN_DATA_DIR}/storage/

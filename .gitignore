@@ -1,3 +1,4 @@
 data/
 backups/
 .env
+.idea/

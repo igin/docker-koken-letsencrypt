@@ -19,10 +19,15 @@ STORAGE_DIR=/tmp/koken_restore/storage
 
 DB_SERVER=${CONTAINER_NAME}-db
 
-docker exec ${DB_SERVER} /usr/bin/mysql ${MYSQL_DATABASE} -u root --password="${MYSQL_ROOT_PASSWORD}" < ${DATABASE_DUMP}
+docker exec -i ${DB_SERVER} /usr/bin/mysql ${MYSQL_DATABASE} -u root --password="${MYSQL_ROOT_PASSWORD}" < "DROP DATABASE ${MYSQL_DATABASE};"
+docker exec -i ${DB_SERVER} /usr/bin/mysql ${MYSQL_DATABASE} -u root --password="${MYSQL_ROOT_PASSWORD}" < "CREATE DATABASE ${MYSQL_DATABASE};"
+docker exec -i ${DB_SERVER} /usr/bin/mysql ${MYSQL_DATABASE} -u root --password="${MYSQL_ROOT_PASSWORD}" < ${DATABASE_DUMP}
 
 rm -rf ${KOKEN_DATA_DIR}/storage/*
 cp -r ${STORAGE_DIR}/* ${KOKEN_DATA_DIR}/storage/
+
+docker exec -i ${CONTAINER_NAME}-web /bin/chown -R www-data:www-data /var/www/html/storage
+docker exec -i ${CONTAINER_NAME}-web /bin/chmod -R 755 /var/www/html/storage
 
 rm -rf /tmp/koken_restore
 
